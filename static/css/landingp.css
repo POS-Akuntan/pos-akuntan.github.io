@@ -16,6 +16,21 @@ body {
 
 }
 
+.hero {
+  background-image: url('/static/img/image.png');
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
 .logo {
   cursor: pointer;
 }
