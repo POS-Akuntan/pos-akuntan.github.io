@@ -163,20 +163,7 @@ nav a:hover {
 
 
 /* Hero Section */
-.hero {
-  background-image: url('./../img/image.png');
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  text-align: center;
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-}
+
 
 .hero h1 {
   font-size: 3rem;
