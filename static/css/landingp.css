@@ -70,7 +70,7 @@ header {
   transition: background 0.3s ease;
 }
 header.scrolled {
-  background: rgba(33, 149, 243, 0.64); /* Lebih solid saat di-scroll */
+  background: rgba(255, 255, 255, 0.64); /* Lebih solid saat di-scroll */
 }
 
 header .logo {
