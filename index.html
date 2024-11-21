@@ -105,7 +105,7 @@
 
 
  <!-- Hubungi Kami -->
-<section id="hubungi" class="d-flex justify-content-center align-items-center py-5 bg-light">
+ <section id="hubungi" class="d-flex justify-content-center align-items-center py-5 bg-light">
   <div class="container shadow-lg rounded-4 bg-white overflow-hidden">
     <div class="row g-0">
       
@@ -120,21 +120,21 @@
           <h2 class="pb-4 text-center fw-bold text-primary">Hubungi Kami</h2>
           
           <!-- Form Input -->
-          <form>
+          <form id="contact-form">
             <div class="mb-4">
-              <input type="text" class="form-control form-control-lg" id="name" placeholder="Nama" required>
+              <input type="text" class="form-control form-control-lg" id="name" name="user_name" placeholder="Nama" required>
             </div>
             
             <div class="mb-4">
-              <input type="email" class="form-control form-control-lg" id="email" placeholder="Email@example.com" required>
+              <input type="email" class="form-control form-control-lg" id="email" name="user_email" placeholder="Email@example.com" required>
             </div>
             
             <div class="mb-4">
-              <input type="tel" class="form-control form-control-lg" id="phone" placeholder="No. Telepon" required>
+              <input type="tel" class="form-control form-control-lg" id="phone" name="user_phone" placeholder="No. Telepon" required>
             </div>
             
             <div class="mb-4">
-              <textarea class="form-control form-control-lg" id="message" rows="4" placeholder="Pesan Anda..." required></textarea>
+              <textarea class="form-control form-control-lg" id="message" name="user_message" rows="4" placeholder="Pesan Anda..." required></textarea>
             </div>
             
             <!-- Button Send di pojok kanan -->
@@ -206,6 +206,34 @@
   </footer>
 
   <!-- Script untuk Toggle Sidebar dan Scroll Effect -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>
+    // Inisialisasi Email.js dengan User ID
+    (function() {
+      emailjs.init("YOUR_USER_ID"); // Ganti dengan User ID dari Email.js
+    })();
+  
+    // Tangani pengiriman formulir
+    document.getElementById('contact-form').addEventListener('submit', function(event) {
+      event.preventDefault(); // Mencegah reload halaman
+  
+      // Ambil data formulir
+      const formData = {
+        user_name: document.getElementById('name').value,
+        user_email: document.getElementById('email').value,
+        user_phone: document.getElementById('phone').value,
+        user_message: document.getElementById('message').value
+      };
+  
+      // Kirim email melalui Email.js
+      emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", formData)
+        .then(function(response) {
+          Swal.fire("Berhasil!", "Pesan Anda telah terkirim.", "success");
+        }, function(error) {
+          Swal.fire("Gagal!", "Pesan Anda tidak terkirim. Silakan coba lagi.", "error");
+        });
+    });
+  </script>
   <script>
     function toggleSidebar() {
       const sidebar = document.getElementById("sidebar");
@@ -220,6 +248,10 @@
         header.classList.remove("scrolled");
       }
     };
+
+    //contact JS
+    
   </script>
+  
 </body>
 </html>
