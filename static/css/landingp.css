@@ -70,14 +70,14 @@ header {
   transition: background 0.3s ease;
 }
 header.scrolled {
-  background: rgba(255, 255, 255, 0.64); /* Lebih solid saat di-scroll */
+  background: rgba(99, 99, 99, 0.64); /* Lebih solid saat di-scroll */
 }
 
 header .logo {
   font-size: 1.5rem;
   font-weight: bold;
 }
-
+  
 nav {
   display: flex;
   gap: 1rem;
