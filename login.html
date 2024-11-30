@@ -64,10 +64,10 @@
             e.preventDefault(); // Mencegah form refresh halaman
 
             // Ambil data dari input
-            const name = document.getElementById("name").value;
+            //const name = document.getElementById("name").value;
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
-            const phoneNumber = document.getElementById("phone_number").value;
+            //const phoneNumber = document.getElementById("phone_number").value;
 
             try {
                 // Lakukan POST ke API login
@@ -77,10 +77,10 @@
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        name: name,
+                        //name: name,
                         email: email,
                         password: password,
-                        phone_number: phoneNumber
+                        //phone_number: phoneNumber
                     })
                 });
 
