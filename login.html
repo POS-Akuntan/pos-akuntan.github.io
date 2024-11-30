@@ -78,9 +78,9 @@
                 if (user) {
                     // Redirect sesuai role
                     if (user.role === "admin") {
-                        window.location.href = "/adminpage/index.html"; // Halaman admin
+                        window.location.href = "https://pos-akuntan.github.io/adminpage/"; // Halaman admin
                     } else if (user.role === "user") {
-                        window.location.href = "/userpage/index.html"; // Halaman user
+                        window.location.href = "https://pos-akuntan.github.io/db/"; // Halaman user
                     } else {
                         alert("Role pengguna tidak dikenali.");
                     }
@@ -99,6 +99,19 @@
             alert("Login berhasil! ID Token diterima.");
             // Redirect ke dashboard
             window.location.href = "https://pos-akuntan.github.io/adminpage/";
+        }
+    </script>
+    <script>
+        // Ganti "YOUR_CLIENT_ID" dengan Client ID dari Google OAuth Anda.
+        const CLIENT_ID = "995363359445-b0mopuhbsgb47pjgdl0gpvhvlhbd207e.apps.googleusercontent.com";
+
+        // Callback function setelah pengguna berhasil login
+        function handleCredentialResponse(response) {
+            console.log("Encoded JWT ID token: " + response.credential);
+            // Decode token menggunakan library atau kirim ke backend untuk verifikasi
+            alert("Login berhasil! ID Token diterima.");
+            // Redirect ke halaman utama atau dashboard
+            window.location.href = "https://pos-akuntan.github.io/adminpage/"; // Sesuaikan halaman redirect
         }
     </script>
 </body>
