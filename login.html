@@ -14,10 +14,16 @@
     <div class="login-container">
         <h2>Login</h2>
         <form id="loginForm">
+            <!-- Input email -->
             <input type="email" id="email" name="email" placeholder="E-Mail" required>
-            <input type="password" id="password" name="password" placeholder="Password" required>
-            <button id="login-btn">Login</button>
-            <button id="back-btn" class="link-style">Back to main menu</button>
+            <!-- Input password -->
+            <input type="password" id="password" name="password" placeholder="Password (case-sensitive)" required>
+            
+            <!-- Tombol login -->
+            <button type="submit" id="login-btn">Login</button>
+            <!-- Tombol kembali ke menu utama -->
+            <button type="button" id="back-btn" class="link-style" onclick="window.location.href='index.html';">Back to main menu</button>
+
             <div class="forgot-password">
                 <!-- Google Login Button -->
                 <div id="g_id_onload" 
@@ -30,11 +36,15 @@
                      data-theme="outline"
                      data-text="signin_with"
                      data-size="large">
+                </div>
             </div>
+
+            <!-- WhatsAuth Login -->
             <div class="whats-auth">
                 <a href="https://pos-akuntan.github.io/login/logwauth.html">Use Whatsauth</a>
             </div>
-            </div>
+
+            <!-- Link tambahan -->
             <div class="forgot-password">
                 <a href="Register.html">Don't have an account?</a>
             </div>
@@ -44,21 +54,53 @@
         </form>
     </div>
 
-    <script src="static/js/login.js"></script>
     <script>
-        // Ganti "YOUR_CLIENT_ID" dengan Client ID dari Google OAuth Anda.
-        const CLIENT_ID = "995363359445-b0mopuhbsgb47pjgdl0gpvhvlhbd207e.apps.googleusercontent.com";
+        // Menangani login manual dengan JavaScript
+        document.getElementById("loginForm").addEventListener("submit", async (e) => {
+            e.preventDefault(); // Mencegah form refresh halaman
 
-        // Callback function setelah pengguna berhasil login
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            try {
+                // Mengambil data pengguna dari API
+                const response = await fetch("https://pos-ochre.vercel.app/api/auth/users");
+                if (!response.ok) {
+                    throw new Error("Gagal mengakses API pengguna.");
+                }
+
+                const data = await response.json();
+                const users = data.users;
+
+                // Mencari user berdasarkan email dan password
+                const user = users.find((u) => u.email === email && password === "password123"); // Sesuaikan password
+
+                if (user) {
+                    // Redirect sesuai role
+                    if (user.role === "admin") {
+                        window.location.href = "/adminpage/index.html"; // Halaman admin
+                    } else if (user.role === "user") {
+                        window.location.href = "/userpage/index.html"; // Halaman user
+                    } else {
+                        alert("Role pengguna tidak dikenali.");
+                    }
+                } else {
+                    alert("Email atau password salah.");
+                }
+            } catch (error) {
+                console.error("Error saat login:", error);
+                alert("Terjadi kesalahan. Silakan coba lagi.");
+            }
+        });
+
+        // Callback Google OAuth
         function handleCredentialResponse(response) {
             console.log("Encoded JWT ID token: " + response.credential);
-            // Decode token menggunakan library atau kirim ke backend untuk verifikasi
             alert("Login berhasil! ID Token diterima.");
-            // Redirect ke halaman utama atau dashboard
-            window.location.href = "https://pos-akuntan.github.io/adminpage/"; // Sesuaikan halaman redirect
+            // Redirect ke dashboard
+            window.location.href = "https://pos-akuntan.github.io/adminpage/";
         }
     </script>
-
 </body>
 
 </html>
