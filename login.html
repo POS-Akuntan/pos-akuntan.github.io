@@ -14,18 +14,9 @@
     <div class="login-container">
         <h2>Login</h2>
         <form id="loginForm">
-            <!-- Input nama -->
-            <!-- <input type="text" id="name" name="name" placeholder="Name" required> -->
-            <!-- Input email -->
             <input type="email" id="email" name="email" placeholder="E-Mail" required>
-            <!-- Input password -->
             <input type="password" id="password" name="password" placeholder="Password" required>
-            <!-- Input nomor telepon -->
-            <!-- <input type="text" id="phone_number" name="phone_number" placeholder="Phone Number" required> -->
-
-            <!-- Tombol login -->
             <button type="submit" id="login-btn">Login</button>
-            <!-- Tombol kembali ke menu utama -->
             <button type="button" id="back-btn" class="link-style" onclick="window.location.href='index.html';">Back to main menu</button>
 
             <div class="forgot-password">
@@ -43,12 +34,10 @@
                 </div>
             </div>
 
-            <!-- WhatsAuth Login -->
             <div class="whats-auth">
                 <a href="https://pos-akuntan.github.io/login/logwauth.html">Use Whatsauth</a>
             </div>
 
-            <!-- Link tambahan -->
             <div class="forgot-password">
                 <a href="Register.html">Don't have an account?</a>
             </div>
@@ -63,11 +52,8 @@
         document.getElementById("loginForm").addEventListener("submit", async (e) => {
             e.preventDefault(); // Mencegah form refresh halaman
 
-            // Ambil data dari input
-            //const name = document.getElementById("name").value;
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
-            //const phoneNumber = document.getElementById("phone_number").value;
 
             try {
                 // Lakukan POST ke API login
@@ -77,10 +63,8 @@
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        //name: name,
                         email: email,
                         password: password,
-                        //phone_number: phoneNumber
                     })
                 });
 
@@ -111,23 +95,41 @@
 
         // Callback Google OAuth
         function handleCredentialResponse(response) {
-            console.log("Encoded JWT ID token: " + response.credential);
-            alert("Login berhasil! ID Token diterima.");
-            // Redirect ke dashboard
-            window.location.href = "https://pos-akuntan.github.io/adminpage/";
-        }
-    </script>
-    <script>
-        // Ganti "YOUR_CLIENT_ID" dengan Client ID dari Google OAuth Anda.
-        const CLIENT_ID = "995363359445-b0mopuhbsgb47pjgdl0gpvhvlhbd207e.apps.googleusercontent.com";
+            const idToken = response.credential;
+            console.log("Encoded JWT ID token: " + idToken);
 
-        // Callback function setelah pengguna berhasil login
-        function handleCredentialResponse(response) {
-            console.log("Encoded JWT ID token: " + response.credential);
-            // Decode token menggunakan library atau kirim ke backend untuk verifikasi
-            alert("Login berhasil! ID Token diterima.");
-            // Redirect ke halaman utama atau dashboard
-            window.location.href = "https://pos-akuntan.github.io/adminpage/"; // Sesuaikan halaman redirect
+            // Kirim token ID ke server untuk validasi
+            fetch("https://pos-ochre.vercel.app/api/auth/google", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    token: idToken
+                })
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.token) {
+                    alert("Login berhasil!");
+                    localStorage.setItem("token", data.token);
+
+                    // Redirect berdasarkan role
+                    if (data.user.role === "admin") {
+                        window.location.href = "https://pos-akuntan.github.io/adminpage/";
+                    } else if (data.user.role === "user") {
+                        window.location.href = "https://pos-akuntan.github.io/db/";
+                    } else {
+                        alert("Role pengguna tidak dikenali.");
+                    }
+                } else {
+                    alert("Gagal login dengan Google.");
+                }
+            })
+            .catch((error) => {
+                console.error("Error login Google:", error);
+                alert("Terjadi kesalahan saat login dengan Google.");
+            });
         }
     </script>
 </body>
