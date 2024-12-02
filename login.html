@@ -100,36 +100,37 @@
 
             // Kirim token ID ke server untuk validasi
             fetch("https://pos-ochre.vercel.app/api/auth/google", {
-                method: "GET",
+                method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    token: idToken
+                    token: response.credential  // Menggunakan token dari Google OAuth
                 })
             })
-            .then((res) => res.json())
+            .then((res) => res.json())  // Parsing respons JSON
             .then((data) => {
                 if (data.token) {
-                    alert("Login berhasil!");
+                    // Menyimpan token di localStorage
                     localStorage.setItem("token", data.token);
-
+            
                     // Redirect berdasarkan role
                     if (data.user.role === "admin") {
-                        window.location.href = "https://pos-akuntan.github.io/adminpage/";
+                        window.location.href = "https://pos-akuntan.github.io/adminpage/"; // Halaman admin
                     } else if (data.user.role === "user") {
-                        window.location.href = "https://pos-akuntan.github.io/db/";
+                        window.location.href = "https://pos-akuntan.github.io/db/"; // Halaman user
                     } else {
                         alert("Role pengguna tidak dikenali.");
                     }
                 } else {
-                    alert("Gagal login dengan Google.");
+                    alert("Login gagal. Token tidak diterima.");
                 }
             })
             .catch((error) => {
-                console.error("Error login Google:", error);
+                console.error("Error saat login dengan Google:", error);
                 alert("Terjadi kesalahan saat login dengan Google.");
             });
+            
         }
     </script>
 </body>
