@@ -42,32 +42,61 @@
 
         <div class="forgot-password">
           <!-- Google Login Button -->
-            <div
-                id="g_id_onload"
-                data-client_id="995363359445-b0mopuhbsgb47pjgdl0gpvhvlhbd207e.apps.googleusercontent.com"
-                data-callback="handleCredentialResponse"
-            ></div>
-            <div
-                class="g_id_signin"
-                data-type="standard"
-                data-shape="rectangular"
-                data-theme="outline"
-                data-text="signin_with"
-                data-size="large"
-            ></div>
-            <script>
-                        // Ganti "YOUR_CLIENT_ID" dengan Client ID dari Google OAuth Anda.
-            const CLIENT_ID = "861139910885-5flb4pjosqce4ecldalgqkuj66kf2eru.apps.googleusercontent.com";
-
-            // Callback function setelah pengguna berhasil login
-            function handleCredentialResponse(response) {
-                console.log("Encoded JWT ID token: " + response.credential);
-                // Decode token menggunakan library atau kirim ke backend untuk verifikasi
-                alert("Login berhasil! ID Token diterima.");
-                // Redirect ke halaman utama atau dashboard
-                window.location.href = "https://pos-akuntan.github.io/adminpage/"; // Sesuaikan halaman redirect
-            }
-            </script>
+          <div 
+          id="g_id_onload" 
+          data-client_id="995363359445-b0mopuhbsgb47pjgdl0gpvhvlhbd207e.apps.googleusercontent.com"
+          data-callback="handleCredentialResponse">
+      </div>
+      <div 
+          class="g_id_signin"
+          data-type="standard"
+          data-shape="rectangular"
+          data-theme="outline"
+          data-text="signin_with"
+          data-size="large">
+      </div>
+  
+      <script>
+          async function handleCredentialResponse(response) {
+              const idToken = response.credential;
+              console.log("Google ID Token:", idToken);
+  
+              try {
+                  // Kirim ID token ke backend Anda untuk verifikasi
+                  const result = await fetch("https://pos-ochre.vercel.app/api/auth/google", {
+                      method: "POST",
+                      headers: {
+                          "Content-Type": "application/json"
+                      },
+                      body: JSON.stringify({ token: idToken })
+                  });
+  
+                  if (!result.ok) {
+                      const errorData = await result.json();
+                      throw new Error(errorData.message || "Login gagal");
+                  }
+  
+                  // Respons berhasil
+                  const data = await result.json();
+                  console.log("Login berhasil:", data);
+  
+                  // Simpan token ke localStorage
+                  localStorage.setItem("token", data.token);
+  
+                  // Redirect berdasarkan role
+                  if (data.user.role === "admin") {
+                      window.location.href = "https://pos-akuntan.github.io/adminpage/";
+                  } else if (data.user.role === "user") {
+                      window.location.href = "https://pos-akuntan.github.io/db/";
+                  } else {
+                      alert("Role pengguna tidak dikenali.");
+                  }
+              } catch (error) {
+                  console.error("Error login Google:", error);
+                  alert(error.message);
+              }
+          }
+      </script>
           <!-- <script>
             // Callback Google OAuth
             function handleCredentialResponse(response) {
