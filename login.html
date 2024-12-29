@@ -86,7 +86,7 @@
                   // Redirect berdasarkan role
                   if (data.user.role === "admin") {
                       window.location.href = "https://pos-akuntan.github.io/adminpage/";
-                  } else if (data.user.role === "user") {
+                  } else if (data.user.role === "kasir") {
                       window.location.href = "https://pos-akuntan.github.io/db/";
                   } else {
                       alert("Role pengguna tidak dikenali.");
@@ -97,57 +97,6 @@
               }
           }
       </script>
-          <!-- <script>
-            // Callback Google OAuth
-            function handleCredentialResponse(response) {
-              const idToken = response.credential;
-              console.log("Encoded JWT ID token: ", idToken);
-
-              // Validasi token dasar di sisi frontend
-              if (!idToken || idToken.length < 10) {
-                console.error("Token tidak valid.");
-                alert("Token tidak valid. Silakan coba lagi.");
-                return;
-              }
-
-              // Kirim token ke backend untuk verifikasi
-              fetch("https://pos-ochre.vercel.app/api/auth/google", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ token: idToken }),
-              })
-                .then((res) => {
-                  console.log("Server Response Status: ", res.status);
-                  return res.json();
-                })
-                .then((data) => {
-                  console.log("Response Data: ", data);
-                  if (data.token) {
-                    // Simpan token di localStorage
-                    localStorage.setItem("token", data.token);
-
-                    // Redirect berdasarkan role
-                    if (data.user.role === "admin") {
-                      window.location.href =
-                        "https://pos-akuntan.github.io/adminpage/";
-                    } else if (data.user.role === "user") {
-                      window.location.href =
-                        "https://pos-akuntan.github.io/db/";
-                    } else {
-                      alert("Role pengguna tidak dikenali.");
-                    }
-                  } else {
-                    alert("Login gagal. Token tidak diterima.");
-                  }
-                })
-                .catch((error) => {
-                  console.error("Error saat login dengan Google:", error);
-                  alert("Terjadi kesalahan saat login dengan Google.");
-                });
-            }
-          </script> -->
         </div>
 
         <div class="whats-auth">
@@ -207,8 +156,8 @@
               if (result.user.role === "admin") {
                 window.location.href =
                   "https://pos-akuntan.github.io/adminpage/"; // Halaman admin
-              } else if (result.user.role === "user") {
-                window.location.href = "https://pos-akuntan.github.io/db/"; // Halaman user
+              } else if (result.user.role === "kasir") {
+                window.location.href = "https://pos-akuntan.github.io/db/"; // Halaman kasir
               } else {
                 alert("Role pengguna tidak dikenali.");
               }
