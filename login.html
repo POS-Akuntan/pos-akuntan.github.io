@@ -41,32 +41,10 @@
         </button>
         <button type="submit" id="logingoogle" >Login google</button>
         <script>
-
-// Tambahkan event listener untuk tombol login Google
-document.getElementById("logingoogle").addEventListener("click", () => {
-  window.location.href = "https://pos-ochre.vercel.app/api/auth/google";
-});
-
-// Fungsi untuk menyimpan token dari URL ke localStorage
-function saveTokenFromURL() {
-  // Dapatkan URL saat ini
-  const urlParams = new URLSearchParams(window.location.search);
-
-  // Ambil parameter token dari URL
-  const token = urlParams.get("token");
-
-  // Jika token ada, simpan ke localStorage
-  if (token) {
-    localStorage.setItem("token", token);
-    console.log("Token berhasil disimpan ke localStorage:", token);
-  } else {
-    console.warn("Token tidak ditemukan di URL.");
-  }
-}
-
-// Panggil fungsi setelah halaman dimuat
-window.addEventListener("load", saveTokenFromURL);
-
+          
+          document.getElementById("logingoogle").addEventListener("click", () => {
+            window.location.href = "https://pos-ochre.vercel.app/api/auth/google";
+          });
         </script>
         <div class="forgot-password">
 
