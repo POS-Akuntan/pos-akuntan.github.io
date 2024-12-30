@@ -39,13 +39,18 @@
         >
           Back to main menu
         </button>
-
+        <button type="submit" id="logingoogle" >Login google</button>
+        <script>
+          document.getElementById("logingoogle").addEventListener("click", () => {
+            window.location.href = "https://pos-ochre.vercel.app/api/auth/google";
+          });
+        </script>
         <div class="forgot-password">
+
           <!-- Google Login Button -->
-          <div 
-          id="g_id_onload" 
-          data-client_id="995363359445-b0mopuhbsgb47pjgdl0gpvhvlhbd207e.apps.googleusercontent.com"
-          data-callback="handleCredentialResponse">
+          <!-- <div id="g_id_onload" > -->
+          <!-- <div id="GoogleLogin" >
+            <a ></a>
       </div>
       <div 
           class="g_id_signin"
@@ -54,7 +59,7 @@
           data-theme="outline"
           data-text="signin_with"
           data-size="large">
-      </div>
+      </div> -->
   
       <script>
           async function handleCredentialResponse(response) {
