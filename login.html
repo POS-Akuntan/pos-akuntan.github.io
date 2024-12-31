@@ -41,11 +41,48 @@
         </button>
         <button type="submit" id="logingoogle" >Login google</button>
         <script>
-          
+                    // Tambahkan CSS untuk tombol login Google
+                    const style = document.createElement("style");
+                    style.innerHTML = `
+                      #logingoogle {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        background-color: #4285F4;
+                        color: white;
+                        border: none;
+                        border-radius: 4px;
+                        padding: 10px 20px;
+                        font-size: 16px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                        transition: background-color 0.3s ease;
+                      }
+                
+                      #logingoogle:hover {
+                        background-color: #357AE8;
+                      }
+                
+                      #logingoogle img {
+                        margin-right: 10px;
+                        width: 20px;
+                        height: 20px;
+                      }
+                    `;
+                    document.head.appendChild(style);
+
+          const logingoogleButton = document.getElementById("logingoogle");
+          const googleIcon = document.createElement("img");
+          googleIcon.src = "https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg";
+          googleIcon.alt = "Google Logo";
+          logingoogleButton.prepend(googleIcon);
+      
           document.getElementById("logingoogle").addEventListener("click", () => {
             window.location.href = "https://pos-ochre.vercel.app/api/auth/google";
           });
         </script>
+
         <div class="forgot-password">
 
           <!-- Google Login Button -->
